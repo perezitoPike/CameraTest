@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Galery</title>
+</head>
+
+<body>
+    <h1>Photo Galery</h1>
+    <div class="container">
+        <div id="contentImages" class="content-info"></div>
+    </div>
+    <script>
+        var contentImages = document.getElementById("contentImages");
+        var currentImages = ("<%= images%>").split(',');
+        console.log(currentImages);
+        var info = "<ul class='ul'>";
+        currentImages.forEach(element => {
+            var direction = "<li>" +
+                "<a href='" + element + "'>" + "<img src='" + element + "'>" + "</a>" +
+                "</li>";
+            info += direction;
+            console.log(direction);
+        });
+        info += "</lu>";
+        contentImages.innerHTML += info;
+    </script>
+</body>
+
+</html>

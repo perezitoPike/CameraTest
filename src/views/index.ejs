@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Camara</title>       
+    </head>
+
+    <body>
+        <h1>Tomar Foto</h1>
+        <p id="errorTxt"></p>
+            <div>
+                <video id="theVideo" controls autoplay></video>
+                <canvas id="theCanvas"></canvas>
+            </div>
+            <div>
+                <button id="btnCapture" type="submit">Capture</button>
+                <a href="/photoGalery">Go To Galery</a> 
+            </div>
+    
+        <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+        <script src="./Camera.js"></script>
+        <script>
+            const socket = io();
+            socket.on('arduinoMessage', function(data){
+                console.log('Data ' + data);
+                var takePicture = process_data(data[0]);
+                if(takePicture){
+                    CaptureImage();
+                }
+            });
+
+             function process_data(data){
+                 console.log('result: ' + (data == 'T'));
+                 return data == 'T';
+             }
+        </script>
+    </body>
+</html>
