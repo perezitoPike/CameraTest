@@ -1,10 +1,9 @@
-var videoWidth = 520;
-var videoHeight = 480;
+var videoWidth = 1080;
+var videoHeight = 920;
 var canvasContext;
 var videoTag = document.getElementById('theVideo');
 var canvasTag = document.getElementById('theCanvas');
 var btnCapture = document.getElementById("btnCapture");
-// var btnDownloadImage = document.getElementById("btnDownloadImage");
 
 videoTag.setAttribute('width', videoWidth);
 videoTag.setAttribute('height', videoHeight);
@@ -43,11 +42,12 @@ function SendCaptureToServer(){
     data.append("image", blob, "capturedImage.png");
 
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        // if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-        //     alert(xmlHttp.responseText);
-        // }
-    }
+    // xmlHttp.onreadystatechange = function () {
+    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+    //         alert(xmlHttp.responseText);
+    //     }
+    // }
+    // xmlHttp.open("post", "http://164.92.118.98:4000/upload");
     xmlHttp.open("post", "/upload");
     xmlHttp.send(data);
 }

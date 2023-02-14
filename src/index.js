@@ -10,8 +10,6 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const path = require('path');
 
-// app.use(express.static('public'));
-
 server.listen(4000, () => {
     console.log('servidor en puerto 4000');
 });
@@ -20,7 +18,6 @@ app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 
 //Middlewares
-
 //routes
 app.use(express.static(path.join(__dirname, 'views')));
 app.use('/static',express.static(path.join(__dirname,'./public/uploads')));

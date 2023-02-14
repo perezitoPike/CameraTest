@@ -6,6 +6,7 @@ const { v1: uuidv1 } = require('uuid');
 const fs = require('fs');
 
 const multer = require('multer');
+const { dir } = require('console');
 
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
@@ -20,11 +21,17 @@ router.get('/',(req, res)=>{
 });
 
 router.get('/photoGalery', (req, res) => {
-    let images = GetImagesFromDirectoty(path.join(__dirname, '../public/uploads'));
+    let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
     res.render('PhotoGalery', { images: images });
 });
 
-function GetImagesFromDirectoty(dirPath) {
+router.get('/deletePhotoGalery',(req,res)=>{
+    DeleteImagesFromDirectory(path.join(__dirname, '../public/uploads'));
+    let images = [];
+    res.render('PhotoGalery', { images: images });
+});
+
+function GetImagesFromDirectory(dirPath) {
     let allImages = [];
     let files = fs.readdirSync(dirPath);
 
@@ -39,7 +46,23 @@ function GetImagesFromDirectoty(dirPath) {
             allImages.push('static/'+ file);
         }
     }
-    return allImages
+    return allImages;
+}
+
+function DeleteImagesFromDirectory(dirPath){
+    let files = fs.readdirSync(dirPath);
+
+    for (let i in files) {
+        let file = files[i];
+        let fileLocation = path.join(dirPath, file);
+        var stat = fs.statSync(fileLocation);
+
+        if (stat && stat.isDirectory()) {
+            getImagesFromDir(fileLocation);
+        } else if (stat && stat.isFile() && ['.jpg', '.png'].indexOf(path.extname(fileLocation)) !== -1) {
+            fs.unlinkSync(fileLocation);
+        }
+    }
 }
 
 const upload = multer({
