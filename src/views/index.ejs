@@ -8,9 +8,14 @@
 
     <body>
         <h1>Tomar Foto</h1>
+        <h2>Selecciona un dispositivo</h2>
+        <div>
+            <select name="listaDeDispositivos" id="listaDeDispositivos"></select>
+            <button id="boton">Tomar foto</button>
+        </div>
         <p id="errorTxt"></p>
             <div>
-                <video id="theVideo" controls autoplay></video>
+                <video id="theVideo" muted="muted" controls autoplay></video>
                 <canvas id="theCanvas"></canvas>
             </div>
             <div>

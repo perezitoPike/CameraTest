@@ -60,6 +60,14 @@ Author:		elemis
 /*-----------------------------------------------------------------------------------*/
 /*	01. RESET
 /*-----------------------------------------------------------------------------------*/
+.ocultar-div{
+    opacity: 1;
+}
+
+.Opacidad-Zero-Div{
+    opacity: 0;
+}
+
 *,
 *:before,
 *:after {
@@ -6133,4 +6141,10 @@ list-blue i {
   .modal-dialog {
     max-width: 1140px;
   }
+}
+
+@media (max-width: 950px) {
+    .ocultar-div{
+        display: none;
+    }
 }
