@@ -68,6 +68,25 @@ Author:		elemis
     opacity: 0;
 }
 
+.contentBlack {
+    background: rgb(0, 0, 0);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: 0.55;
+    top: 0;
+    left: 0;
+}
+
+.Counter{
+    font-size: 3rem;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
 *,
 *:before,
 *:after {

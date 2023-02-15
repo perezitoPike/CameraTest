@@ -5,11 +5,12 @@ var videoTag = document.getElementById('theVideo');
 var canvasTag = document.getElementById('theCanvas');
 var btnCapture = document.getElementById("btnCapture");
 var listaDeDispositivos = document.getElementById('listaDeDispositivos');
+var backGroundCamera = document.getElementById('TheBackGroundCamera');
 
-videoTag.setAttribute('width', videoWidth);
-videoTag.setAttribute('height', videoHeight);
-canvasTag.setAttribute('width', videoWidth);
-canvasTag.setAttribute('height', videoHeight);
+// videoTag.setAttribute('width', videoWidth);
+// videoTag.setAttribute('height', videoHeight);
+// canvasTag.setAttribute('width', videoWidth);
+// canvasTag.setAttribute('height', videoHeight);
 
 
 const tieneSoporteUserMedia = () =>
@@ -42,9 +43,10 @@ const llenarSelectConDispositivosDisponibles = () => {
     
                 if (dispositivosDeVideo.length > 0) {
                     dispositivosDeVideo.forEach(dispositivo => {
-                        const option = document.createElement('option');
+                        var option = document.createElement('option');
                         option.value = dispositivo.deviceId;
-                        option.text = dispositivo.label;
+                        option.text = dispositivo.label; 
+                        option.className ="btn-dark";                       
                         listaDeDispositivos.appendChild(option);
                     });
                 }
@@ -66,7 +68,6 @@ const llenarSelectConDispositivosDisponibles = () => {
                 
             }, (error) => {
                 console.log("Permiso denegado o error: ", error);
-                // $estado.innerHTML = "No se puede acceder a la cámara, o no diste permiso.";
             });
     }
 
@@ -119,12 +120,26 @@ window.onload = () => {
     });
 };
 
-function CaptureImage(){
-    canvasContext.drawImage(videoTag, 0, 0, videoWidth, videoHeight);
+function CaptureImage() {
+    let temporizador = new Temporizador('temporizador', 5, 0, true, SaveCurrentImage);
+    temporizador.CurrentCounter();
+    backGroundCamera.className = "contentBlack";
+    console.log("Capturando Imagen");
+}
+
+function SaveCurrentImage() {
+    backGroundCamera.className = "Opacidad-Zero-Div";
+    canvasContext.drawImage(videoTag, 0, 0, videoTag.getAttribute('width'), videoTag.getAttribute('height'));
+    videoTag.pause();
     SendCaptureToServer();
+    let temporizador = new Temporizador('temporizador', 1, 0, false, () => { 
+        videoTag.play();
+     });
+    temporizador.CurrentCounter();
 }
 
 function SendCaptureToServer(){
+    console.log("Enviando: Datos");
     var dataURL = theCanvas.toDataURL();
     var blob = dataURLtoBlob(dataURL);
     var data = new FormData();
@@ -136,9 +151,10 @@ function SendCaptureToServer(){
     //         alert(xmlHttp.responseText);
     //     }
     // }
-    // xmlHttp.open("post", "http://164.92.118.98:4000/upload");
-    xmlHttp.open("post", "/upload");
+    xmlHttp.open("post", "http://164.92.118.98:4000/upload");
+    // xmlHttp.open("post", "/upload");
     xmlHttp.send(data);
+    console.log("Datos: Enviados " + data);
 }
 
 function dataURLtoBlob(dataURL) {
@@ -153,4 +169,28 @@ function dataURLtoBlob(dataURL) {
     return new Blob([u8arr], {
         type: mime
     });
+}
+
+function Temporizador(id, start, end, showText, call) {
+    this.id = id;
+    this.start = start;
+    this.end = end;
+    this.showText = showText;
+    this.contador = this.start;
+
+    this.CurrentCounter = function () {
+        if (this.contador == this.end) {
+            this.contador = null;
+            if(this.showText){
+                document.getElementById(this.id).innerHTML = "";
+            }
+            call();
+            return;
+        }
+        if(showText){
+            document.getElementById(this.id).innerHTML = this.contador;
+        }
+        this.contador--;
+        setTimeout(this.CurrentCounter.bind(this), 1000);
+    };
 }
