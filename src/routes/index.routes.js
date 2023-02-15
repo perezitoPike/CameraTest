@@ -81,7 +81,7 @@ const upload = multer({
 
 router.post('/upload', upload,(req,res)=>{
     console.log(req.file);
-    res.render('index');
+    res.render('index');    
 });
 
 

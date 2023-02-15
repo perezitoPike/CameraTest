@@ -4,7 +4,8 @@
   "description": "Apk to take photos",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js COM3"
+    "dev": "nodemon src/index.js COM3",
+    "dev2": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
