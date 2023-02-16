@@ -4,12 +4,12 @@
 // }
 // let portCom = process.argv[2];
 
-// const express = require('express');
-// const app = express();
-// const server = require('http').Server(app);
-// const io = require('socket.io')(server);
-// const path = require('path');
-// const cors = require('cors');
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const path = require('path');
+const cors = require('cors');
 
 server.listen(4000, () => {
     console.log('servidor en puerto 4000');
