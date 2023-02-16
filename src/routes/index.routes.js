@@ -81,7 +81,9 @@ const upload = multer({
 
 router.post('/upload', upload,(req,res)=>{
     console.log(req.file);
-    res.render('index');    
+    let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
+    res.render('PhotoGalery', { images: images });
+    // res.render('index');    
 });
 
 
