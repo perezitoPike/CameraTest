@@ -12,7 +12,6 @@ var backGroundCamera = document.getElementById('TheBackGroundCamera');
 // canvasTag.setAttribute('width', videoWidth);
 // canvasTag.setAttribute('height', videoHeight);
 
-
 const tieneSoporteUserMedia = () =>
     !!(navigator.getUserMedia || (navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia) || navigator.webkitGetUserMedia || navigator.msGetUserMedia);
 const _getUserMedia = (...arguments) =>
@@ -112,9 +111,7 @@ window.onload = () => {
     // }).catch(e => {
     //     document.getElementById('errorTxt').innerHTML = 'ERROR: ' + e.toString();
     // });
-
-    canvasContext = canvasTag.getContext('2d');
-    
+    canvasContext = canvasTag.getContext('2d');    
     btnCapture.addEventListener("click", () => {
         CaptureImage();
     });
@@ -129,28 +126,31 @@ function CaptureImage() {
 
 function SaveCurrentImage() {
     backGroundCamera.className = "Opacidad-Zero-Div";
-    canvasContext.drawImage(videoTag, 0, 0, videoTag.getAttribute('width'), videoTag.getAttribute('height'));
+    canvasTag.setAttribute('width', videoTag.videoWidth);
+    canvasTag.setAttribute('height', videoTag.videoHeight);
+    canvasContext.drawImage(videoTag, 0, 0, videoTag.videoWidth, videoTag.videoHeight);   
     videoTag.pause();
     SendCaptureToServer();
-    let temporizador = new Temporizador('temporizador', 1, 0, false, () => { 
+    let temporizador = new Temporizador('temporizador', 1, 0, false, () => {
         videoTag.play();
-     });
+    });
     temporizador.CurrentCounter();
 }
 
 function SendCaptureToServer(){
     console.log("Enviando: Datos");
-    var dataURL = theCanvas.toDataURL();
+    // var dataURL = theCanvas.toDataURL();
+    var dataURL = canvasTag.toDataURL();
     var blob = dataURLtoBlob(dataURL);
     var data = new FormData();
     data.append("image", blob, "capturedImage.png");
 
     var xmlHttp = new XMLHttpRequest();
-    // xmlHttp.onreadystatechange = function () {
-    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-    //         alert(xmlHttp.responseText);
-    //     }
-    // }
+    xmlHttp.onreadystatechange = function () {
+        // if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        //     alert(xmlHttp.responseText);
+        // }
+    }
     xmlHttp.open("post", "http://164.92.118.98:4000/upload");
     // xmlHttp.open("post", "/upload");
     xmlHttp.send(data);
@@ -184,6 +184,7 @@ function Temporizador(id, start, end, showText, call) {
             if(this.showText){
                 document.getElementById(this.id).innerHTML = "";
             }
+            clearTimeout();
             call();
             return;
         }

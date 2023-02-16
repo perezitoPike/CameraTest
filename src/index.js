@@ -4,11 +4,12 @@
 // }
 // let portCom = process.argv[2];
 
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const path = require('path');
+// const express = require('express');
+// const app = express();
+// const server = require('http').Server(app);
+// const io = require('socket.io')(server);
+// const path = require('path');
+// const cors = require('cors');
 
 server.listen(4000, () => {
     console.log('servidor en puerto 4000');
@@ -19,6 +20,11 @@ app.set('view engine', 'ejs');
 
 //Middlewares
 //routes
+app.use(cors({
+    origin: "*",
+    methods: ["POST","GET","OPTIONS","PUT","DELETE"],
+    allowedHeaders: ["Content-Tyoe", "X-Aunth-Token","Origin","Authorization"]
+}));
 app.use(express.static(path.join(__dirname, 'views')));
 app.use('/static',express.static(path.join(__dirname,'./public/uploads')));
 app.use(require('./routes/index.routes'));
