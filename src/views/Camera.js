@@ -6,11 +6,9 @@ var canvasTag = document.getElementById('theCanvas');
 var btnCapture = document.getElementById("btnCapture");
 var listaDeDispositivos = document.getElementById('listaDeDispositivos');
 var backGroundCamera = document.getElementById('TheBackGroundCamera');
+var takingPicture = false;
 
-// videoTag.setAttribute('width', videoWidth);
-// videoTag.setAttribute('height', videoHeight);
-// canvasTag.setAttribute('width', videoWidth);
-// canvasTag.setAttribute('height', videoHeight);
+const socket = io();
 
 const tieneSoporteUserMedia = () =>
     !!(navigator.getUserMedia || (navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia) || navigator.webkitGetUserMedia || navigator.msGetUserMedia);
@@ -100,17 +98,6 @@ window.onload = () => {
             mostrarStream(listaDeDispositivos.value);
         }
     });
-    // navigator.mediaDevices.getUserMedia({
-    //     audio: false,
-    //     video: {
-    //         width: videoWidth,
-    //         height: videoHeight
-    //     }
-    // }).then(stream => {
-    //     videoTag.srcObject = stream;
-    // }).catch(e => {
-    //     document.getElementById('errorTxt').innerHTML = 'ERROR: ' + e.toString();
-    // });
     canvasContext = canvasTag.getContext('2d');    
     btnCapture.addEventListener("click", () => {
         CaptureImage();
@@ -118,6 +105,11 @@ window.onload = () => {
 };
 
 function CaptureImage() {
+    if(takingPicture){
+        console.log("Esperando a que termine la anterior captura");
+        return;
+    }
+    takingPicture = true;
     let temporizador = new Temporizador('temporizador', 5, 0, true, SaveCurrentImage);
     temporizador.CurrentCounter();
     backGroundCamera.className = "contentBlack";
@@ -133,6 +125,7 @@ function SaveCurrentImage() {
     SendCaptureToServer();
     let temporizador = new Temporizador('temporizador', 1, 0, false, () => {
         videoTag.play();
+        takingPicture = false;
     });
     temporizador.CurrentCounter();
 }
@@ -143,7 +136,8 @@ function SendCaptureToServer(){
     var dataURL = canvasTag.toDataURL();
     var blob = dataURLtoBlob(dataURL);
     var data = new FormData();
-    data.append("image", blob, "capturedImage.png");
+    var fileName = Date.now().toString() +".png";
+    data.append("image", blob, fileName);
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
@@ -152,9 +146,9 @@ function SendCaptureToServer(){
         // }
     }
     xmlHttp.open("post", "http://164.92.118.98:4000/upload");
-    // xmlHttp.open("post", "/upload");
+    //xmlHttp.open("post", "/upload");
     xmlHttp.send(data);
-    console.log("Datos: Enviados " + data);
+    socket.emit("updateImages",fileName);
 }
 
 function dataURLtoBlob(dataURL) {
@@ -195,3 +189,15 @@ function Temporizador(id, start, end, showText, call) {
         setTimeout(this.CurrentCounter.bind(this), 1000);
     };
 }
+
+socket.on('arduinoMessage', function (data) {
+    var takePicture = process_data(data[0]);
+    if (takePicture) {
+      CaptureImage();
+    }
+  });
+
+  function process_data(data) {
+    console.log("DATA: "+data == 'T');
+    return data == 'T';
+  }

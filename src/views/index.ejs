@@ -29,7 +29,7 @@
     <nav class="navbar solid nav-wrapper-dark inverse-text navbar-expand-lg">
       <div class="container">
         <div class="navbar-header">
-          <div class="navbar-brand"><a href="./brailie-html/template/brailie/index.html"><img src="#"
+          <div class="navbar-brand"><img src="#"
                 srcset="./brailie-html/template/brailie/style/images/logo-light.png 1x, ./brailie-html/template/brailie/style/images/logo-light@2x.png 2x"
                 alt="" /></a></div>
           <div class="navbar-brand">Camera</div>
@@ -134,19 +134,18 @@
   <script src="/socket.io/socket.io.js" charset="utf-8"></script>
   <script src="./Camera.js"></script>
   <script>
-    const socket = io();
-    socket.on('arduinoMessage', function (data) {
-      console.log('Data ' + data);
-      var takePicture = process_data(data[0]);
-      if (takePicture) {
-        CaptureImage();
-      }
-    });
+    // const socket = io();
+    // socket.on('arduinoMessage', function (data) {
+    //   var takePicture = process_data(data[0]);
+    //   if (takePicture) {
+    //     CaptureImage();
+    //   }
+    // });
 
-    function process_data(data) {
-      console.log('result: ' + (data == 'T'));
-      return data == 'T';
-    }
+    // function process_data(data) {
+    //   console.log("DATA: "+data == 'T');
+    //   return data == 'T';
+    // }
   </script>
 </body>
 

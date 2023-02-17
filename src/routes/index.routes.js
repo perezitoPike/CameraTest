@@ -1,26 +1,32 @@
 const { Router } = require('express');
 const path = require('path');
 const router = Router();
-const { v1: uuidv1 } = require('uuid');
+// const { v1: uuidv1 } = require('uuid');
 
 const fs = require('fs');
 
 const multer = require('multer');
-const { dir } = require('console');
+// const { dir } = require('console');
 
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
     filename: (req, file, cb) => {
-        cb(null, uuidv1() + path.extname(file.originalname).toLowerCase());
+        // cb(null, uuidv1() + path.extname(file.originalname).toLowerCase());
+        cb(null, file.originalname);
     }
 });
 
 //Routes
-router.get('/',(req, res)=>{
+router.get('/', (req, res) => {
     res.render('index');
 });
 
 router.get('/photoGalery', (req, res) => {
+    let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
+    res.render('PhotoGalery', { images: images });
+});
+
+router.get('/photoMobileGalery', (req, res) => {
     let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
     res.render('PhotoGalery', { images: images });
 });
@@ -43,7 +49,8 @@ function GetImagesFromDirectory(dirPath) {
         if (stat && stat.isDirectory()) {
             getImagesFromDir(fileLocation);
         } else if (stat && stat.isFile() && ['.jpg', '.png'].indexOf(path.extname(fileLocation)) !== -1) {
-            allImages.push('static/'+ file);
+            // allImages.push('static/'+ file);
+            allImages.push(file);
         }
     }
     return allImages;
@@ -81,8 +88,8 @@ const upload = multer({
 
 router.post('/upload', upload,(req,res)=>{
     console.log(req.file);
-    let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
-    res.render('PhotoGalery', { images: images });
+    // let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
+    // res.render('PhotoGalery', { images: images });
     // res.render('index');    
 });
 

@@ -29,7 +29,7 @@
     <nav class="navbar solid nav-wrapper-dark inverse-text navbar-expand-lg">
       <div class="container">
         <div class="navbar-header">
-          <div class="navbar-brand"><a href="./brailie-html/template/brailie/index.html"><img src="#"
+          <div class="navbar-brand"><img src="#"
                 srcset="./brailie-html/template/brailie/style/images/logo-light.png 1x, ./brailie-html/template/brailie/style/images/logo-light@2x.png 2x"
                 alt="" /></a></div>
           <div class="navbar-brand">Photo Galery</div>
@@ -37,34 +37,36 @@
             <!-- <button class="hamburger animate" data-toggle="collapse" data-target=".navbar-collapse"><span></span></button> -->
           </div>
         </div>
-        <!-- /.navbar-header -->
         <div class="collapse navbar-collapse Opacidad-Zero-Div">
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item"><a class="nav-link">Home</a>              
-              <!--/.dropdown-menu --> 
             </li>
           </ul>
-          <!-- /.navbar-nav -->
           <div class="navbar-divider"></div>
           <ul class="social social-mute social-s">
-            <!-- <li><a href="#"><i class="fa fa-flickr"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-instagram"></i></a></li> -->
           </ul>
         </div>
-        <!-- /.navbar-collapse -->
       </div>
-      <!-- /.container -->
     </nav>
-    <!-- /.navbar -->
+    <!-- <div class="ccontainer-slider_">
+      <div class="slider_" id="slider">
+        <div class="slider__section_"><img class="slider__img_" src="static/1676628685509.png" alt=""/> </div>
+        <div class="slider__section_"><img class="slider__img_" src="static/1676628685509.png" alt=""/></div>
+        <div class="slider__section_"><img class="slider__img_" src="static/1676628685509.png" alt=""/></div>
+        <div class="slider__section_"><img class="slider__img_" src="static/1676628685509.png" alt=""/></div>
+      </div>
+    </div>
+    <div class="slider__btn-left slider_btn_" id="btn_left">&#60</div>
+    <div class="slider__btn-right slider_btn_" id="btn_right">&#62</div> -->
+
+
     <div class="wrapper dark-wrapper inverse-text">
       <div class="container-fluid inner pt-15 pb-15">
-        <div class="swiper-container-wrapper swiper-auto-full ver2" data-aos="fade">
+        <div class="swiper-container-wrapper swiper-auto-full ver2" data-aos="fade"><!--Aca funciona el slider swiper-auto-full-->
           <div class="swiper-container text-center">
             <div class="swiper-wrapper" id="contentImages">
               <!-- <div class="swiper-slide"> <img src="./brailie-html/template/brailie/style/images/art/br1.jpg" alt="" /> </div> -->
             </div>
-            <!-- .swiper-wrapper -->
           </div>
 
           <div class="swiper-button-next"></div>
@@ -149,22 +151,13 @@
   <script src="./brailie-html/template/brailie/style/js/plugins.js"></script>
   <script src="./brailie-html/template/brailie/style/js/scripts.js"></script>
 
+  <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+  <script src="./socket.js"></script>
+  <script src="./SliderScroll.js"></script>
   <script>
-    var contentImages_UP = document.getElementById("contentImages");
-    var contentImages_Down = document.getElementById("contentImages1");
-    var currentImages = ("<%= images%>").split(',');
+    var currentImages = ('<%=images%>').split(',');
     console.log(currentImages);
-    contentImages_UP.innerHTML += GetDivCreated(currentImages);
-    contentImages_Down.innerHTML += GetDivCreated(currentImages.reverse());
-
-    function GetDivCreated(currentImages) {
-      var direction = "";
-      currentImages.forEach(element => {
-        direction += "<div class='swiper-slide swiper-auto-full ver2'> <img src='" + element + "' alt='' /></div>";
-        // console.log(direction);
-      });
-      return direction;
-    }
+    UpgradeStartImages(currentImages);
   </script>
   <!-- <div class="swiper-slide"> <img src="./brailie-html/template/brailie/style/images/art/br1.jpg" alt="" /> </div> -->
 </body>

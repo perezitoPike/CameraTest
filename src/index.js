@@ -8,6 +8,9 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+
+const socketServer = require('./socketServer');
+
 const path = require('path');
 const cors = require('cors');
 
@@ -49,3 +52,6 @@ const {DelimiterParser} = require('@serialport/parser-delimiter');
 
 // parser.on('error', (err) => console.log(err));
 // port.on('error', (err) => console.log(err));
+
+//Socket Server
+socketServer(server);
