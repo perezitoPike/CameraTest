@@ -35,10 +35,10 @@ app.use(require('./routes/index.routes'));
 const {SerialPort} = require('serialport');
 const {DelimiterParser} = require('@serialport/parser-delimiter');
 
-const port = new SerialPort({
-    path: portCom,
-    baudRate: 9600,
-});
+// const port = new SerialPort({
+//     path: portCom,
+//     baudRate: 9600,
+// });
 
 // const parser = port.pipe(new DelimiterParser({delimiter: '\n'}));
 
