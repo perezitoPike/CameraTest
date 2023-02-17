@@ -148,7 +148,9 @@ function SendCaptureToServer(){
     //xmlHttp.open("post", "http://164.92.118.98:4000/upload");
     xmlHttp.open("post", "/upload");
     xmlHttp.send(data);
-    socket.emit("updateImages",fileName);
+    setTimeout(function () {
+        socket.emit("updateImages",fileName);
+    }, 1500);
 }
 
 function dataURLtoBlob(dataURL) {
