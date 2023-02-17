@@ -2,13 +2,13 @@ const socket = io();
 
 const urlImage = 'static/';
 
-function UpgradeStartImages(images){
-    for (var count = 0; count<20;count++){
+function UpgradeStartImages(images) {
+    for (var count = 0; count < 20; count++) {
         var id = "contentImages" + count.toString();
         var contentImage = document.getElementById(id);
-        if(count%2==0){
+        if (count % 2 == 0) {
             contentImage.innerHTML += GetDivCreated(images);
-        }else{
+        } else {
             contentImage.innerHTML += GetDivCreated(images.reverse());
         }
     }
@@ -28,9 +28,9 @@ function GetCurrentImage(fileName) {
     //return "<div class='swiper-slide swiper-auto-full ver2'> <a href='" + currentDirImage + "'><img src='" + currentDirImage + "' alt='' /></a></div>";
 }
 socket.on("updateNewImage", function (fileName) {
-    for (var count = 0; count<20;count++){
+    for (var count = 0; count < 20; count++) {
         var id = "contentImages" + count.toString();
         var contentImage = document.getElementById(id);
-        contentImage.innerHTML += GetCurrentImage(fileName) + contentImages_UP.innerHTML;
+        contentImage.innerHTML = GetCurrentImage(fileName) + contentImage.innerHTML;
     }
 });

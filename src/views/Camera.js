@@ -145,8 +145,8 @@ function SendCaptureToServer(){
         //     alert(xmlHttp.responseText);
         // }
     }
-    //xmlHttp.open("post", "http://164.92.118.98:4000/upload");
-    xmlHttp.open("post", "/upload");
+    xmlHttp.open("post", "http://164.92.118.98:4000/upload");
+    //xmlHttp.open("post", "/upload");
     xmlHttp.send(data);
     setTimeout(function () {
         socket.emit("updateImages",fileName);

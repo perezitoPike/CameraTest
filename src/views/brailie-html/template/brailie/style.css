@@ -2084,6 +2084,10 @@ ol {
 .swiper-full.ver2,
 .swiper-auto-full.ver2,
 .swiper-auto-full.ver2 img {
+    /* height: calc(100vh - 215px); */
+    height: 50px;
+}
+.swiper-auto-full.ver3{
     height: calc(100vh - 215px);
 }
 .swiper-container-wrapper .swiper-pagination {
