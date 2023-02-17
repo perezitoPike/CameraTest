@@ -5,6 +5,15 @@ var contentImages_Down = document.getElementById("contentImages1");
 const urlImage = 'static/';
 
 function UpgradeStartImages(images){
+    for (var count = 0; count<20;count++){
+        var id = "contentImages" + count.toString();
+        var contentImage = document.getElementById(id);
+        if(count%2==0){
+            contentImage.innerHTML += GetDivCreated(images);
+        }else{
+            contentImage.innerHTML += GetDivCreated(images.reverse());
+        }
+    }
     contentImages_UP.innerHTML += GetDivCreated(images);
     contentImages_Down.innerHTML += GetDivCreated(images.reverse());
 }
