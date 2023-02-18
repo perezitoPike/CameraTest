@@ -95,7 +95,7 @@ async function compositeImages(name, res, req) {
             ])
             .toFile(path.join(__dirname, '../public/uploads/', 'wa' + name))
             .then((data) => {
-                res.redirect('http://164.92.118.98:4000/static/wa' + name)
+                res.redirect('http://143.198.231.69:4000/static/wa' + name)
             });
     } catch (error) {
         console.log(error);
