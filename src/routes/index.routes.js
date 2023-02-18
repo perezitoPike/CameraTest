@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-router.get('/photos',(req,res)=>{
+router.get('/photos', (req, res) => {
     let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
     res.json(images);
 });
@@ -37,7 +37,7 @@ router.get('/photoMobileGalery', (req, res) => {
     res.render('PhotoMobileGalery', { images: images });
 });
 
-router.get('/deletePhotoGalery',(req,res)=>{
+router.get('/deletePhotoGalery', (req, res) => {
     DeleteImagesFromDirectory(path.join(__dirname, '../public/uploads'));
     let images = [];
     res.render('PhotoGalery', { images: images });
@@ -62,7 +62,7 @@ function GetImagesFromDirectory(dirPath) {
     return allImages;
 }
 
-function DeleteImagesFromDirectory(dirPath){
+function DeleteImagesFromDirectory(dirPath) {
     let files = fs.readdirSync(dirPath);
 
     for (let i in files) {
@@ -78,7 +78,7 @@ function DeleteImagesFromDirectory(dirPath){
     }
 }
 // Sharp
-router.get('/Watermark/:imageName', function(req, res) {
+router.get('/Watermark/:imageName', function (req, res) {
     var image = req.params['imageName'];
     var newimage = compositeImages(image, res, req);
 });
@@ -93,9 +93,9 @@ async function compositeImages(name, res, req) {
                     left: 0,
                 },
             ])
-            .toFile(path.join(__dirname, '../public/uploads/', 'wa'+name))
+            .toFile(path.join(__dirname, '../public/uploads/', 'wa' + name))
             .then((data) => {
-                res.redirect('http://164.92.118.98:4000/static/wa'+name)
+                res.redirect('http://164.92.118.98:4000/static/wa' + name)
             });
     } catch (error) {
         console.log(error);

@@ -132,9 +132,6 @@ function SaveCurrentImage() {
 
 function SendCaptureToServer(){    
     console.log("Enviando: Datos");  
-    // StartWatermark(canvasTag.toDataURL());
-    // console.log(canvasTag.toDataURL("image/png"));
-// return;
     var dataURL = canvasTag.toDataURL();
     var blob = dataURLtoBlob(dataURL);
     var data = new FormData();
@@ -152,9 +149,9 @@ function SendCaptureToServer(){
     xmlHttp.open("post", "http://164.92.118.98:4000/upload");
     //xmlHttp.open("post", "/upload");
     xmlHttp.send(data);
-    setTimeout(function () {
-        socket.emit("updateImages",fileName);
-    }, 1500);
+    // setTimeout(function () {
+    //     socket.emit("updateImages",fileName);
+    // }, 1500);
 }
 
 function dataURLtoBlob(dataURL) {

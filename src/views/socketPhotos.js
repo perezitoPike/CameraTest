@@ -1,4 +1,4 @@
-const socket = io();
+// const socket = io();
 
 const urlImage = 'static/';
 
@@ -26,12 +26,11 @@ function GetCurrentImage(fileName) {
     var currentDirImage = urlImage + fileName;
     var currentRedirection = "http://164.92.118.98:4000/watermark/"+fileName;
     return "<div class='swiper-slide swiper-auto-full ver2'> <a href='" + currentRedirection + "'><img src='" + currentDirImage + "' alt='' /></a></div>";
-    //return "<div class='swiper-slide swiper-auto-full ver2'> <a href='" + currentDirImage + "'><img src='" + currentDirImage + "' alt='' /></a></div>";
 }
-socket.on("updateNewImage", function (fileName) {
-    for (var count = 0; count < 20; count++) {
-        var id = "contentImages" + count.toString();
-        var contentImage = document.getElementById(id);
-        contentImage.innerHTML = GetCurrentImage(fileName) + contentImage.innerHTML;
-    }
-});
+// socket.on("updateNewImage", function (fileName) {
+//     for (var count = 0; count < 20; count++) {
+//         var id = "contentImages" + count.toString();
+//         var contentImage = document.getElementById(id);
+//         contentImage.innerHTML = GetCurrentImage(fileName) + contentImage.innerHTML;
+//     }
+// });
