@@ -137,7 +137,6 @@ function SendCaptureToServer(){
     var data = new FormData();
     var fileName = Date.now().toString() +".png";
     data.append("image", blob, fileName);
-    console.log(data);
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
