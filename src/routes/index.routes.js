@@ -56,10 +56,27 @@ function GetImagesFromDirectory(dirPath) {
             getImagesFromDir(fileLocation);
         } else if (stat && stat.isFile() && ['.jpg', '.png'].indexOf(path.extname(fileLocation)) !== -1) {
             // allImages.push('static/'+ file);
-            allImages.push(file);
+            var arrayFile = file.split('.');
+            console.log(arrayFile);
+            var onlyNumbers = true;
+            for(var count = 0; count < arrayFile[0].length; count++){
+                if(DetectLeters(arrayFile[0][count])){
+                    onlyNumbers = false;
+                    break;
+                }
+            }
+
+            if(onlyNumbers){
+                allImages.push(file);
+            }
         }
     }
     return allImages;
+}
+
+function DetectLeters(caracter){
+    let ascii = caracter.toUpperCase().charCodeAt(0);
+    return ascii > 64 && ascii < 91;
 }
 
 function DeleteImagesFromDirectory(dirPath) {
