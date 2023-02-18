@@ -2087,7 +2087,9 @@ ol {
     /* height: calc(100vh - 215px); */
     height: 50px;
 }
-.swiper-auto-full.ver3{
+.swiper-full.ver3,
+.swiper-auto-full.ver3,
+.swiper-auto-full.ver3 img{
     height: calc(100vh - 215px);
 }
 .swiper-container-wrapper .swiper-pagination {

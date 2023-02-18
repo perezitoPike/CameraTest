@@ -8,6 +8,8 @@ const Jimp = require("jimp-watermark");
 
 const multer = require('multer');
 // const { dir } = require('console');
+const sharp = require("sharp");
+
 
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
@@ -27,11 +29,6 @@ router.get('/photos',(req,res)=>{
     res.json(images);
 });
 
-router.get('/addWaterMark',(req,res)=>{
-    AddWatermark();
-    console.log("Terminado");
-});
-
 router.get('/photoGalery', (req, res) => {
     let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
     res.render('PhotoGalery', { images: images });
@@ -39,7 +36,7 @@ router.get('/photoGalery', (req, res) => {
 
 router.get('/photoMobileGalery', (req, res) => {
     let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
-    res.render('PhotoGalery', { images: images });
+    res.render('PhotoMobileGalery', { images: images });
 });
 
 router.get('/deletePhotoGalery',(req,res)=>{
@@ -82,6 +79,30 @@ function DeleteImagesFromDirectory(dirPath){
         }
     }
 }
+// Sharp
+router.get('/Watermark/:imageName', function(req, res) {
+    var image = req.params['imageName'];
+    var newimage = compositeImages(image, res, req);
+});
+
+async function compositeImages(name, res, req) {
+    try {
+        await sharp(path.join(__dirname, '../public/uploads/', name))
+            .composite([
+                {
+                    input: path.join(__dirname, '../public/frame1.png'),
+                    top: 260,
+                    left: 0,
+                },
+            ])
+            .toFile(path.join(__dirname, '../public/uploads/', 'wa'+name))
+            .then((data) => {
+                res.redirect('http://164.92.118.98:4000/static/wa'+name)
+            });
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const upload = multer({
     storage,
@@ -101,18 +122,5 @@ router.post('/upload', upload, (req, res) => {
     console.log(req.file);
     res.render('index');
 });
-
-function AddWatermark(){
-    let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
-    images.forEach(element => {
-        let options ={
-                'ratio': 0.5,
-                'opacity': 0.7,
-                dest:'static',
-            };
-                Jimp.addWatermark('static/'+element, "./img/Logo.png", options);
-    });
-    console.log("Actualizaicon completa");
-}
 
 module.exports = router;

@@ -24,7 +24,8 @@ function GetDivCreated(currentImages) {
 
 function GetCurrentImage(fileName) {
     var currentDirImage = urlImage + fileName;
-    return "<div class='swiper-slide swiper-auto-full ver2'> <a href='" + currentDirImage + "'><img src='" + currentDirImage + "' alt='' /></a></div>";
+    var currentRedirection = "http://164.92.118.98:4000/watermark/"+fileName;
+    return "<div class='swiper-slide swiper-auto-full ver2'> <a href='" + currentRedirection + "'><img src='" + currentDirImage + "' alt='' /></a></div>";
     //return "<div class='swiper-slide swiper-auto-full ver2'> <a href='" + currentDirImage + "'><img src='" + currentDirImage + "' alt='' /></a></div>";
 }
 socket.on("updateNewImage", function (fileName) {
