@@ -2,8 +2,8 @@ const socket = io();
 
 const urlImage = 'static/';
 
-function UpgradeStartImages(images) {
-    for (var count = 0; count < 20; count++) {
+function UpgradeStartImages(images, amount) {
+    for (var count = 0; count < amount; count++) {
         var id = "contentImages" + count.toString();
         var contentImage = document.getElementById(id);
         if (count % 2 == 0) {
