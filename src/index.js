@@ -32,8 +32,8 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use('/static',express.static(path.join(__dirname,'./public/uploads')));
 app.use(require('./routes/index.routes'));
 
-// const {SerialPort} = require('serialport');
-// const {DelimiterParser} = require('@serialport/parser-delimiter');
+const {SerialPort} = require('serialport');
+const {DelimiterParser} = require('@serialport/parser-delimiter');
 
 // const port = new SerialPort({
 //     path: portCom,

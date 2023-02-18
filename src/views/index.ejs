@@ -60,7 +60,6 @@
           <div class="swiper-container text-center">
             <div class="swiper-container text-center">
               <div class="swiper-slide"><video id="theVideo" muted="muted" controls autoplay></video></div>
-              <div class="swiper-slide"><canvas id="theCanvas"></canvas></div>
               <div class="Opacidad-Zero-Div" id="TheBackGroundCamera"></div>
               <div class="navbar-brand Counter inverse-text ml-auto text-md-center" id="temporizador"></div>
             </div>
@@ -71,6 +70,12 @@
       </div>
       <!-- /.container-fluid -->
     </div>
+
+    <image class="Opacidad-Zero-Div" id="original" src="./img/Logo.png""></image>
+    <image class="Opacidad-Zero-Div" id="logo" src="./img/Logo.png""></image>
+    <div class="swiper-slide Opacidad-Zero-Div"><canvas id="theCanvas"></canvas></div>
+    <div class="swiper-slide Opacidad-Zero-Div"><canvas id="theLogo"></canvas></div>
+
     <footer>
       <div class="sub-footer dark-wrapper inverse-text">
         <div class="container inner pt-30 pb-30 d-md-flex align-items-md-center text-center">
@@ -127,6 +132,7 @@
   <script src="./brailie-html/template/brailie/style/js/scripts.js"></script>
 
   <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+  <script src="./Watermark.js"></script>
   <script src="./Camera.js"></script>
 </body>
 

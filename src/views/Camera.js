@@ -110,9 +110,9 @@ function CaptureImage() {
         return;
     }
     takingPicture = true;
+    backGroundCamera.className = "contentBlack";
     let temporizador = new Temporizador('temporizador', 5, 0, true, SaveCurrentImage);
     temporizador.CurrentCounter();
-    backGroundCamera.className = "contentBlack";
     console.log("Capturando Imagen");
 }
 
@@ -120,24 +120,27 @@ function SaveCurrentImage() {
     backGroundCamera.className = "Opacidad-Zero-Div";
     canvasTag.setAttribute('width', videoTag.videoWidth);
     canvasTag.setAttribute('height', videoTag.videoHeight);
-    canvasContext.drawImage(videoTag, 0, 0, videoTag.videoWidth, videoTag.videoHeight);   
+    canvasContext.drawImage(videoTag, 0, 0, videoTag.videoWidth, videoTag.videoHeight);  
     videoTag.pause();
     SendCaptureToServer();
     let temporizador = new Temporizador('temporizador', 1, 0, false, () => {
-        videoTag.play();
         takingPicture = false;
+        videoTag.play();
     });
     temporizador.CurrentCounter();
 }
 
-function SendCaptureToServer(){
-    console.log("Enviando: Datos");
-    // var dataURL = theCanvas.toDataURL();
+function SendCaptureToServer(){    
+    console.log("Enviando: Datos");  
+    // StartWatermark(canvasTag.toDataURL());
+    // console.log(canvasTag.toDataURL("image/png"));
+// return;
     var dataURL = canvasTag.toDataURL();
     var blob = dataURLtoBlob(dataURL);
     var data = new FormData();
     var fileName = Date.now().toString() +".png";
     data.append("image", blob, fileName);
+    console.log(data);
 
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
@@ -145,6 +148,7 @@ function SendCaptureToServer(){
         //     alert(xmlHttp.responseText);
         // }
     }
+
     xmlHttp.open("post", "http://164.92.118.98:4000/upload");
     //xmlHttp.open("post", "/upload");
     xmlHttp.send(data);

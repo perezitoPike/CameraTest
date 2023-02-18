@@ -4,6 +4,7 @@ const router = Router();
 // const { v1: uuidv1 } = require('uuid');
 
 const fs = require('fs');
+const Jimp = require("jimp-watermark");
 
 const multer = require('multer');
 // const { dir } = require('console');
@@ -19,6 +20,16 @@ const storage = multer.diskStorage({
 //Routes
 router.get('/', (req, res) => {
     res.render('index');
+});
+
+router.get('/photos',(req,res)=>{
+    let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
+    res.json(images);
+});
+
+router.get('/addWaterMark',(req,res)=>{
+    AddWatermark();
+    console.log("Terminado");
 });
 
 router.get('/photoGalery', (req, res) => {
@@ -86,12 +97,22 @@ const upload = multer({
     }
 }).single('image');
 
-router.post('/upload', upload,(req,res)=>{
+router.post('/upload', upload, (req, res) => {
     console.log(req.file);
-    // let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
-    // res.render('PhotoGalery', { images: images });
-    // res.render('index');    
+    res.render('index');
 });
 
+function AddWatermark(){
+    let images = GetImagesFromDirectory(path.join(__dirname, '../public/uploads'));
+    images.forEach(element => {
+        let options ={
+                'ratio': 0.5,
+                'opacity': 0.7,
+                dest:'static',
+            };
+                Jimp.addWatermark('static/'+element, "./img/Logo.png", options);
+    });
+    console.log("Actualizaicon completa");
+}
 
 module.exports = router;
