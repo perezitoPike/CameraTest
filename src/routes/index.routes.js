@@ -1,10 +1,9 @@
 const { Router } = require('express');
 const path = require('path');
 const router = Router();
-// const { v1: uuidv1 } = require('uuid');
 
 const fs = require('fs');
-const Jimp = require("jimp-watermark");
+// const Jimp = require("jimp-watermark");
 
 const multer = require('multer');
 // const { dir } = require('console');
@@ -14,7 +13,6 @@ const sharp = require("sharp");
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
     filename: (req, file, cb) => {
-        // cb(null, uuidv1() + path.extname(file.originalname).toLowerCase());
         cb(null, file.originalname);
     }
 });
